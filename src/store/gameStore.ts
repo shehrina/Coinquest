@@ -26,45 +26,70 @@ interface GameState {
   // Inventory
   ownedItems: OwnedItem[]
   buyItem: (item: ShopItem) => boolean
-  
+
   // Lessons
   completedLessons: string[]
   completeLesson: (lessonId: string) => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
-  // Piggy Bank - all coins stored here
-  savedCoins: 50, // Start with some coins for demo
-  
-  addCoins: (amount) => set((state) => ({ 
-    savedCoins: state.savedCoins + amount 
+  // Start with some coins for demo
+  coins: 20,
+
+  addCoins: (amount) => set((state) => ({
+    coins: state.coins + amount
   })),
-  
+
   spendCoins: (amount) => {
     const state = get()
-    if (state.savedCoins >= amount) {
-      set({ savedCoins: state.savedCoins - amount })
+    if (state.coins >= amount) {
+      set({ coins: state.coins - amount })
       return true
     }
     return false
   },
-  
-  growSavings: () => set((state) => ({ 
+
+  // Piggy Bank
+  savedCoins: 0,
+
+  saveCoins: (amount) => {
+    const state = get()
+    if (state.coins >= amount) {
+      set({
+        coins: state.coins - amount,
+        savedCoins: state.savedCoins + amount
+      })
+    }
+  },
+
+  withdrawCoins: (amount) => {
+    const state = get()
+    if (state.savedCoins >= amount) {
+      set({
+        savedCoins: state.savedCoins - amount,
+        coins: state.coins + amount
+      })
+      return true
+    }
+    return false
+  },
+
+  growSavings: () => set((state) => ({
     // 10% growth rate for demo purposes
-    savedCoins: Math.floor(state.savedCoins * 1.1) 
+    savedCoins: Math.floor(state.savedCoins * 1.1)
   })),
 
   // Inventory
   ownedItems: [],
-  
+
   buyItem: (item) => {
     const state = get()
-    if (state.savedCoins >= item.price) {
-      set({ 
-        savedCoins: state.savedCoins - item.price,
-        ownedItems: [...state.ownedItems, { 
-          id: `${item.id}-${Date.now()}`, 
-          itemId: item.id 
+    if (state.coins >= item.price) {
+      set({
+        coins: state.coins - item.price,
+        ownedItems: [...state.ownedItems, {
+          id: `${item.id}-${Date.now()}`,
+          itemId: item.id
         }]
       })
       return true
@@ -74,10 +99,10 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   // Lessons
   completedLessons: [],
-  
+
   completeLesson: (lessonId) => set((state) => ({
-    completedLessons: state.completedLessons.includes(lessonId) 
-      ? state.completedLessons 
+    completedLessons: state.completedLessons.includes(lessonId)
+      ? state.completedLessons
       : [...state.completedLessons, lessonId]
   })),
 }))

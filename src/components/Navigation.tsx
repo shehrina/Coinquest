@@ -16,7 +16,7 @@ const tabs = [
 
 export function Navigation({ currentTab, onTabChange }: NavigationProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 pb-safe">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-300 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] px-2 pb-safe z-[100]">
       <div className="flex justify-around items-center h-16 max-w-lg mx-auto">
         {tabs.map((tab) => {
           const IconComponent = tab.icon
