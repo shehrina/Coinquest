@@ -29,4 +29,25 @@ export const shopItems: ShopItem[] = [
     modelPath: '/models/warrior-toy-fixed.glb',
     category: 'want',
   },
+  {
+    id: 'bed',
+    name: 'Children Bed',
+    price: 40,
+    modelPath: '/models/bed.glb',
+    category: 'upgrade',
+  },
+  {
+    id: 'bookshelf',
+    name: 'Book Shelf',
+    price: 35,
+    modelPath: '/models/bookshelf.glb',
+    category: 'upgrade',
+  },
+  {
+    id: 'dinosaur',
+    name: 'Dinosaur Toy',
+    price: 20,
+    modelPath: '/models/dinosaur.glb',
+    category: 'want',
+  },
 ]

@@ -52,7 +52,7 @@
     }
     
     #start-btn {
-      background: #c4c9b5;
+      background: #A7C7E7;
       color: white;
       border: none;
       padding: 16px 32px;
@@ -158,7 +158,7 @@
     }
     
     .lesson-item.completed {
-      border-color: #c4c9b5;
+      border-color: #A7C7E7;
       background: #dcfce7;
     }
     
@@ -206,7 +206,7 @@
     
     .choice-btn:hover { border-color: #667eea; background: #f0f0ff; }
     .choice-btn:active { transform: scale(0.98); }
-    .choice-btn.correct { border-color: #c4c9b5; background: #f0f2eb; }
+    .choice-btn.correct { border-color: #A7C7E7; background: #e8f4fc; }
     .choice-btn.incorrect { border-color: #ef4444; background: #fef2f2; }
     .choice-btn:disabled { cursor: default; }
     
@@ -484,9 +484,35 @@
       gamepad: { name: '🎮 Gamepad', fact: 'Entertainment is fun, but balancing play time with earning time helps you reach goals faster!' }
     };
 
-    // State
-    let coins = parseInt(localStorage.getItem('arLessonCoins') || '0');
-    let completedLessons = JSON.parse(localStorage.getItem('arCompletedLessons') || '[]');
+    // State - sync with main app's Zustand store
+    function getGameState() {
+      try {
+        const storage = localStorage.getItem('coinquest-storage');
+        if (storage) {
+          const data = JSON.parse(storage);
+          return data.state || { coins: 20, completedLessons: [] };
+        }
+      } catch (e) {
+        console.error('Error reading game state:', e);
+      }
+      return { coins: 20, completedLessons: [] };
+    }
+    
+    function saveGameState(newCoins, newCompletedLessons) {
+      try {
+        const storage = localStorage.getItem('coinquest-storage');
+        let data = storage ? JSON.parse(storage) : { state: {} };
+        data.state.coins = newCoins;
+        data.state.completedLessons = newCompletedLessons;
+        localStorage.setItem('coinquest-storage', JSON.stringify(data));
+      } catch (e) {
+        console.error('Error saving game state:', e);
+      }
+    }
+    
+    const initialState = getGameState();
+    let coins = initialState.coins;
+    let completedLessons = initialState.completedLessons || [];
     let currentLesson = null;
 
     // Three.js / WebXR state
@@ -521,11 +547,11 @@
     // Update UI
     function updateCoins() {
       coinsEl.textContent = coins;
-      localStorage.setItem('arLessonCoins', coins.toString());
+      saveGameState(coins, completedLessons);
     }
 
     function saveProgress() {
-      localStorage.setItem('arCompletedLessons', JSON.stringify(completedLessons));
+      saveGameState(coins, completedLessons);
     }
 
     function setStatus(msg) {

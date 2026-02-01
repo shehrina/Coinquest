@@ -65,7 +65,7 @@ function ShopItemCard({ item }: ShopItemCardProps) {
                 ? 'text-gray-700 hover:opacity-80 active:scale-95'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
-            style={canAfford ? { backgroundColor: '#a3b18a' } : {}}
+            style={canAfford ? { backgroundColor: '#A7C7E7' } : {}}
           >
             {canAfford ? 'Buy' : 'Need more coins'}
           </button>
