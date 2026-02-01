@@ -31,8 +31,6 @@ export function PiggyBank() {
 
   return (
     <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">🐷 Piggy Bank</h2>
-      
       {/* Piggy Bank Visual */}
       <div className={`bg-gradient-to-b from-pink-100 to-pink-200 rounded-3xl p-8 mb-6 text-center transition-transform ${showGrowAnimation ? 'scale-110' : ''}`}>
         <div className="text-8xl mb-4">🐷</div>
@@ -45,24 +43,27 @@ export function PiggyBank() {
       </div>
 
       {/* Amount selector */}
-      <div className="bg-white rounded-2xl p-4 shadow-lg mb-4">
-        <label className="block text-gray-600 text-sm mb-2">Amount</label>
-        <div className="flex items-center gap-2">
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+        <label className="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-4 text-center">Set Savings Amount</label>
+        <div className="flex items-center justify-between px-2">
           <button
             onClick={() => setAmount(Math.max(1, amount - 5))}
-            className="w-10 h-10 rounded-full bg-gray-100 font-bold text-gray-600 hover:bg-gray-200"
+            className="w-12 h-12 rounded-full font-bold text-gray-400 hover:text-gray-700 hover:bg-gray-100 active:scale-90 transition-all flex items-center justify-center text-3xl"
           >
-            -
+            −
           </button>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 1))}
-            className="flex-1 text-center text-2xl font-bold text-gray-800 border-none outline-none"
-          />
+          <div className="flex-1 flex flex-col items-center">
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 1))}
+              className="w-full text-center text-4xl font-bold text-gray-800 bg-transparent border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Coins</span>
+          </div>
           <button
             onClick={() => setAmount(amount + 5)}
-            className="w-10 h-10 rounded-full bg-gray-100 font-bold text-gray-600 hover:bg-gray-200"
+            className="w-12 h-12 rounded-full font-bold text-gray-400 hover:text-gray-700 hover:bg-gray-100 active:scale-90 transition-all flex items-center justify-center text-3xl"
           >
             +
           </button>
