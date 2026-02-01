@@ -18,9 +18,9 @@ export function Lessons() {
     <div className="p-4 pb-24">
       <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
         <FaBook />
-        Learn & Earn
+        Quests
       </h2>
-      <p className="text-gray-500 mb-6">Complete lessons to earn coins!</p>
+      <p className="text-gray-500 mb-6">Complete quests to earn coins!</p>
 
       {availableLessons.length === 0 ? (
         <div className="text-center py-12">
@@ -28,7 +28,7 @@ export function Lessons() {
             <FaGraduationCap className="text-6xl text-blue-500" />
           </div>
           <h3 className="text-xl font-bold text-gray-800 mb-2">
-            All lessons completed!
+            All quests completed!
           </h3>
           <p className="text-gray-500">
             You've learned all the money basics. Great job!
@@ -46,7 +46,7 @@ export function Lessons() {
                 <FaBook className="text-4xl text-blue-500" />
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-800 mb-1">
-                    Lesson {completedLessons.length + index + 1}
+                    Quest {completedLessons.length + index + 1}
                   </h3>
                   <p className="text-sm text-gray-500 line-clamp-2">
                     {lesson.story.substring(0, 60)}...

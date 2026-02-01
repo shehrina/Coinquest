@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>AR Lessons - CoinQuest</title>
+  <title>AR Quests - CoinQuest</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -52,7 +52,7 @@
     }
     
     #start-btn {
-      background: #22c55e;
+      background: #c4c9b5;
       color: white;
       border: none;
       padding: 16px 32px;
@@ -158,7 +158,7 @@
     }
     
     .lesson-item.completed {
-      border-color: #22c55e;
+      border-color: #c4c9b5;
       background: #dcfce7;
     }
     
@@ -206,7 +206,7 @@
     
     .choice-btn:hover { border-color: #667eea; background: #f0f0ff; }
     .choice-btn:active { transform: scale(0.98); }
-    .choice-btn.correct { border-color: #22c55e; background: #dcfce7; }
+    .choice-btn.correct { border-color: #c4c9b5; background: #f0f2eb; }
     .choice-btn.incorrect { border-color: #ef4444; background: #fef2f2; }
     .choice-btn:disabled { cursor: default; }
     
@@ -331,7 +331,7 @@
   <div id="overlay">
     <!-- Start screen -->
     <div id="start-screen">
-      <h1>📚 AR Lessons</h1>
+      <h1>📚 AR Quests</h1>
       <p>Learn money skills with floating 3D objects in AR!</p>
       <button id="start-btn" disabled>Checking AR...</button>
       <a id="back-link" href="/">← Back to CoinQuest</a>
@@ -344,7 +344,7 @@
     
     <!-- Lesson selection -->
     <div id="lesson-select">
-      <h3>📚 Choose a Lesson</h3>
+      <h3>📚 Choose a Quest</h3>
       <div id="lesson-list"></div>
     </div>
     
@@ -367,7 +367,7 @@
     <!-- Complete card - shown after continue -->
     <div id="complete-card">
       <div style="font-size: 4rem; margin-bottom: 16px;">🎉</div>
-      <h3 style="color: #333; font-size: 1.4rem; margin-bottom: 8px;">Lesson Complete!</h3>
+      <h3 style="color: #333; font-size: 1.4rem; margin-bottom: 8px;">Quest Complete!</h3>
       <p style="color: #666; margin-bottom: 20px;">Great job learning about money!</p>
       <button id="back-home-btn" class="action-btn">Back to Home</button>
     </div>
@@ -580,9 +580,9 @@
           const urlLesson = new URLSearchParams(window.location.search).get('lesson');
           if (urlLesson) {
             const lesson = lessons.find(l => l.id === urlLesson);
-            startBtn.textContent = lesson ? `Start: ${lesson.title}` : 'Start AR Lesson';
+            startBtn.textContent = lesson ? `Start: ${lesson.title}` : 'Start AR Quest';
           } else {
-            startBtn.textContent = 'Start AR Lessons';
+            startBtn.textContent = 'Start AR Quests';
           }
           return true;
         } else {
