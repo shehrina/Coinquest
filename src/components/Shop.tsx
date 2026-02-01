@@ -23,10 +23,14 @@ interface ShopItemCardProps {
 
 function ShopItemCard({ item }: ShopItemCardProps) {
   const coins = useGameStore((state) => state.coins)
+  const ownedItems = useGameStore((state) => state.ownedItems)
   const buyItem = useGameStore((state) => state.buyItem)
-  const canAfford = coins >= item.price
+  
+  const isOwned = ownedItems.some(owned => owned.itemId === item.id)
+  const canAfford = coins >= item.price && !isOwned
 
   const handleBuy = () => {
+    if (isOwned) return
     const success = buyItem(item)
     if (success) {
       // Could add animation/sound here
@@ -55,7 +59,7 @@ function ShopItemCard({ item }: ShopItemCardProps) {
           
           <button
             onClick={handleBuy}
-            disabled={!canAfford}
+            disabled={!canAfford || isOwned}
             className={`px-4 py-2 rounded-full font-semibold transition-all ${
               canAfford
                 ? 'text-gray-700 hover:opacity-80 active:scale-95'
@@ -63,7 +67,7 @@ function ShopItemCard({ item }: ShopItemCardProps) {
             }`}
             style={canAfford ? { backgroundColor: '#A7C7E7' } : {}}
           >
-            {canAfford ? 'Buy' : 'Need more coins'}
+            {isOwned ? 'Bought' : canAfford ? 'Buy' : 'Need more coins'}
           </button>
         </div>
       </div>

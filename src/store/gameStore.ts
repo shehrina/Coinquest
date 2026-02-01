@@ -38,78 +38,80 @@ interface GameState {
 export const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
-  // Start with some coins for demo
-  coins: 20,
+      // Start with some coins for demo
+      coins: 20,
 
-  addCoins: (amount) => set((state) => ({
-    coins: state.coins + amount
-  })),
-
-  spendCoins: (amount) => {
-    const state = get()
-    if (state.coins >= amount) {
-      set({ coins: state.coins - amount })
-      return true
-    }
-    return false
-  },
-
-  // Piggy Bank
-  savedCoins: 0,
-
-  saveCoins: (amount: number) => {
-    const state = get()
-    if (state.coins >= amount) {
-      set({
-        coins: state.coins - amount,
-        savedCoins: state.savedCoins + amount
-      })
-    }
-  },
-
-  withdrawCoins: (amount: number) => {
-    const state = get()
-    if (state.savedCoins >= amount) {
-      set({
-        savedCoins: state.savedCoins - amount,
+      addCoins: (amount) => set((state) => ({
         coins: state.coins + amount
-      })
-      return true
-    }
-    return false
-  },
+      })),
 
-  growSavings: () => set((state) => ({
-    // 10% growth rate for demo purposes
-    savedCoins: Math.floor(state.savedCoins * 1.1)
-  })),
+      spendCoins: (amount) => {
+        const state = get()
+        if (state.coins >= amount) {
+          set({ coins: state.coins - amount })
+          return true
+        }
+        return false
+      },
 
-  // Inventory
-  ownedItems: [],
+      // Piggy Bank
+      savedCoins: 0,
 
-  buyItem: (item) => {
-    const state = get()
-    if (state.coins >= item.price) {
-      set({
-        coins: state.coins - item.price,
-        ownedItems: [...state.ownedItems, {
-          id: `${item.id}-${Date.now()}`,
-          itemId: item.id
-        }]
-      })
-      return true
-    }
-    return false
-  },
+      saveCoins: (amount: number) => {
+        const state = get()
+        if (state.coins >= amount) {
+          set({
+            coins: state.coins - amount,
+            savedCoins: state.savedCoins + amount
+          })
+        }
+      },
 
-  // Lessons
-  completedLessons: [],
+      withdrawCoins: (amount: number) => {
+        const state = get()
+        if (state.savedCoins >= amount) {
+          set({
+            savedCoins: state.savedCoins - amount,
+            coins: state.coins + amount
+          })
+          return true
+        }
+        return false
+      },
 
-  completeLesson: (lessonId) => set((state) => ({
-    completedLessons: state.completedLessons.includes(lessonId)
-      ? state.completedLessons
-      : [...state.completedLessons, lessonId]
-  })),
+      growSavings: () => set((state) => ({
+        // 10% growth rate for demo purposes
+        savedCoins: Math.floor(state.savedCoins * 1.1)
+      })),
+
+      // Inventory
+      ownedItems: [],
+
+      buyItem: (item) => {
+        const state = get()
+        const isAlreadyOwned = state.ownedItems.some(owned => owned.itemId === item.id)
+
+        if (!isAlreadyOwned && state.coins >= item.price) {
+          set({
+            coins: state.coins - item.price,
+            ownedItems: [...state.ownedItems, {
+              id: `${item.id}-${Date.now()}`,
+              itemId: item.id
+            }]
+          })
+          return true
+        }
+        return false
+      },
+
+      // Lessons
+      completedLessons: [],
+
+      completeLesson: (lessonId) => set((state) => ({
+        completedLessons: state.completedLessons.includes(lessonId)
+          ? state.completedLessons
+          : [...state.completedLessons, lessonId]
+      })),
     }),
     {
       name: 'coinquest-storage',
