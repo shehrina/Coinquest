@@ -7,16 +7,9 @@ import { Shop } from './components/Shop'
 import { ARRoom } from './components/ARRoom'
 import { PiggyBank } from './components/PiggyBank'
 import { Lessons } from './components/Lessons'
-import { SplashScreen } from './components/SplashScreen'
 
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true)
-
-  if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />
-  }
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9f8f6' }}>
       <TopNav />
